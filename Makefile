@@ -57,7 +57,33 @@ printer: .gen-obj/printer.cc.o
 .PHONY: printer
 
 
+printer_main: .gen-obj/printer_main
+	@ln -f -s .gen-obj/printer_main printer_main
+
+
+bin/printer_main: .gen-obj/printer_main
+	@mkdir -p bin
+	@ln -f -s ../.gen-obj/printer_main bin/printer_main
+
+printer_main.0:
+
+.PHONY: printer_main.0
+
+
+.gen-obj/printer_main.cc.o: $(headers.printer) printer_main.cc
+	@mkdir -p .gen-obj
+	@echo "Compiling:  printer_main.cc (c++)"
+	@$(COMPILE.cc) -I. -I.gen-files -I.gen-src printer_main.cc -o .gen-obj/printer_main.cc.o
+
+
+.gen-obj/printer_main: .gen-obj/printer.cc.o .gen-obj/printer_main.cc.o
+	@echo "Linking:    .gen-obj/printer_main"
+	@$(LINK.cc)  .gen-obj/printer_main.cc.o .gen-obj/printer.cc.o -o .gen-obj/printer_main
+
+
 clean: 
+	@[ -L printer_main ] && rm -f printer_main || true
+	@[ -L bin/printer_main ] && rm -f bin/printer_main || true
 	@rm -rf .gen-obj
 	@rm -rf bin
 	@rm -rf .gen-files
@@ -65,7 +91,7 @@ clean:
 	@rm -rf .gen-pkg
 
 
-all: printer
+all: printer_main bin/printer_main
 
 
 tests: 
