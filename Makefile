@@ -44,17 +44,152 @@ export CCEmbed
 	@echo "$$CCEmbed" | base64 --decode > .gen-files/cc_embed.sh
 	@chmod 0755 .gen-files/cc_embed.sh
 
+
+.gen-src/common: 
+	@mkdir -p .gen-src; [ -f common ] || mkdir -p common; ln -f -s ../common .gen-src/common
+
+
+.gen-src/common/.dummy: .gen-src/common
+	@[ -f .gen-src/common/.dummy ] || touch .gen-src/common/.dummy
+
+
+.gen-src/.gen-pkg/common: 
+	@mkdir -p .gen-src/.gen-pkg; [ -f .gen-pkg/common ] || mkdir -p .gen-pkg/common; ln -f -s ../../.gen-pkg/common .gen-src/.gen-pkg/common
+
+
+.gen-src/.gen-pkg/common/.dummy: .gen-src/.gen-pkg/common
+	@[ -f .gen-src/.gen-pkg/common/.dummy ] || touch .gen-src/.gen-pkg/common/.dummy
+
+
+.gen-src/.gen-files/common: 
+	@mkdir -p .gen-src/.gen-files; [ -f .gen-files/common ] || mkdir -p .gen-files/common; ln -f -s ../../.gen-files/common .gen-src/.gen-files/common
+
+
+.gen-src/.gen-files/common/.dummy: .gen-src/.gen-files/common
+	@[ -f .gen-src/.gen-files/common/.dummy ] || touch .gen-src/.gen-files/common/.dummy
+
+common/auto_.0: .gen-src/common .gen-src/.gen-pkg/common .gen-src/.gen-files/common
+
+.PHONY: common/auto_.0
+
+c_compile_args.common/third_party/google/gflags/gflags := 
+ifeq ($(CC_GCC),1)
+	c_compile_args.common/third_party/google/gflags/gflags := -Wno-error=unused-local-typedefs
+endif
+
+c_header_compile_args.common/third_party/google/gflags/gflags := -Icommon/third_party/google/gflags/src
+
+cxx_compile_args.common/third_party/google/gflags/gflags := 
+ifeq ($(CXX_GCC),1)
+	cxx_compile_args.common/third_party/google/gflags/gflags := -Wno-error=unused-local-typedefs
+endif
+
+cxx_header_compile_args.common/third_party/google/gflags/gflags := -Icommon/third_party/google/gflags/src
+
+headers.common/third_party/google/gflags/gflags := common/third_party/google/gflags/src/util.h common/third_party/google/gflags/src/google/gflags.h common/third_party/google/gflags/src/google/gflags_completions.h
+
+
+.gen-obj/common/third_party/google/gflags/src/gflags.cc.o: .gen-src/common/.dummy .gen-src/.gen-files/common/.dummy .gen-src/.gen-pkg/common/.dummy $(headers.common/third_party/google/gflags/gflags) common/third_party/google/gflags/src/gflags.cc
+	@mkdir -p .gen-obj/common/third_party/google/gflags/src
+	@echo "Compiling:  common/third_party/google/gflags/src/gflags.cc (c++)"
+	@$(COMPILE.cc) -I. -I.gen-files -I.gen-src -I.gen-src/.gen-files $(cxx_header_compile_args.common/third_party/google/gflags/gflags) $(cxx_compile_args.common/third_party/google/gflags/gflags) common/third_party/google/gflags/src/gflags.cc -o .gen-obj/common/third_party/google/gflags/src/gflags.cc.o
+
+
+.gen-obj/common/third_party/google/gflags/src/gflags_completions.cc.o: .gen-src/common/.dummy .gen-src/.gen-files/common/.dummy .gen-src/.gen-pkg/common/.dummy $(headers.common/third_party/google/gflags/gflags) common/third_party/google/gflags/src/gflags_completions.cc
+	@mkdir -p .gen-obj/common/third_party/google/gflags/src
+	@echo "Compiling:  common/third_party/google/gflags/src/gflags_completions.cc (c++)"
+	@$(COMPILE.cc) -I. -I.gen-files -I.gen-src -I.gen-src/.gen-files $(cxx_header_compile_args.common/third_party/google/gflags/gflags) $(cxx_compile_args.common/third_party/google/gflags/gflags) common/third_party/google/gflags/src/gflags_completions.cc -o .gen-obj/common/third_party/google/gflags/src/gflags_completions.cc.o
+
+
+.gen-obj/common/third_party/google/gflags/src/gflags_nc.cc.o: .gen-src/common/.dummy .gen-src/.gen-files/common/.dummy .gen-src/.gen-pkg/common/.dummy $(headers.common/third_party/google/gflags/gflags) common/third_party/google/gflags/src/gflags_nc.cc
+	@mkdir -p .gen-obj/common/third_party/google/gflags/src
+	@echo "Compiling:  common/third_party/google/gflags/src/gflags_nc.cc (c++)"
+	@$(COMPILE.cc) -I. -I.gen-files -I.gen-src -I.gen-src/.gen-files $(cxx_header_compile_args.common/third_party/google/gflags/gflags) $(cxx_compile_args.common/third_party/google/gflags/gflags) common/third_party/google/gflags/src/gflags_nc.cc -o .gen-obj/common/third_party/google/gflags/src/gflags_nc.cc.o
+
+
+.gen-obj/common/third_party/google/gflags/src/gflags_reporting.cc.o: .gen-src/common/.dummy .gen-src/.gen-files/common/.dummy .gen-src/.gen-pkg/common/.dummy $(headers.common/third_party/google/gflags/gflags) common/third_party/google/gflags/src/gflags_reporting.cc
+	@mkdir -p .gen-obj/common/third_party/google/gflags/src
+	@echo "Compiling:  common/third_party/google/gflags/src/gflags_reporting.cc (c++)"
+	@$(COMPILE.cc) -I. -I.gen-files -I.gen-src -I.gen-src/.gen-files $(cxx_header_compile_args.common/third_party/google/gflags/gflags) $(cxx_compile_args.common/third_party/google/gflags/gflags) common/third_party/google/gflags/src/gflags_reporting.cc -o .gen-obj/common/third_party/google/gflags/src/gflags_reporting.cc.o
+
+common/third_party/google/gflags/gflags: .gen-obj/common/third_party/google/gflags/src/gflags.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_completions.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_nc.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_reporting.cc.o common/auto_.0
+
+.PHONY: common/third_party/google/gflags/gflags
+
+headers.common/base/flags := common/base/flags.h
+
+common/base/flags: common/third_party/google/gflags/gflags common/auto_.0
+
+.PHONY: common/base/flags
+
 headers.printer := printer.h
 
 
-.gen-obj/printer.cc.o: $(headers.printer) printer.cc
+.gen-obj/printer.cc.o: .gen-src/common/.dummy .gen-src/.gen-files/common/.dummy .gen-src/.gen-pkg/common/.dummy $(headers.common/third_party/google/gflags/gflags) $(headers.common/base/flags) $(headers.printer) printer.cc
 	@mkdir -p .gen-obj
 	@echo "Compiling:  printer.cc (c++)"
-	@$(COMPILE.cc) -I. -I.gen-files -I.gen-src printer.cc -o .gen-obj/printer.cc.o
+	@$(COMPILE.cc) -I. -I.gen-files -I.gen-src -I.gen-src/.gen-files $(cxx_header_compile_args.common/third_party/google/gflags/gflags) printer.cc -o .gen-obj/printer.cc.o
 
-printer: .gen-obj/printer.cc.o
+printer: .gen-obj/printer.cc.o common/base/flags
 
 .PHONY: printer
+
+
+.gen-obj/common/third_party/google/glog/.glog_gen.0.dummy: .gen-src/common/.dummy .gen-src/.gen-files/common/.dummy .gen-src/.gen-pkg/common/.dummy $(headers.common/third_party/google/gflags/gflags) .gen-obj/common/third_party/google/gflags/src/gflags.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_completions.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_nc.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_reporting.cc.o
+	@echo "Autoconf:   //common/third_party/google/glog:glog_gen.0"
+	@(mkdir -p .gen-files/common/third_party/google/glog; cd common/third_party/google/glog; GEN_DIR="../../../../.gen-files/common/third_party/google/glog" OBJ_DIR="../../../../.gen-obj/common/third_party/google/glog SRC_DIR="../../../../.gen-src/common/third_party/google/glog ROOT_DIR="$(ROOT_DIR)"  CXX_GCC="$(CXX_GCC)" CC_GCC="$(CC_GCC)" CC="$(CC)" CXX="$(CXX)" CXXFLAGS="$(CXXFLAGS)" BASIC_CXXFLAGS="$(BASIC_CXXFLAGS)" CFLAGS="$(CFLAGS)" BASIC_CFLAGS="$(BASIC_CFLAGS)" LDFLAGS="$(LDFLAGS)" MAKE="$(MAKE)" GFLAGS_OBJS=".gen-obj/common/third_party/google/gflags/src/*.o" GFLAGS_SRC_ROOT="common/third_party/google/gflags/src" DEP_CXXFLAGS="$(cxx_header_compile_args.common/third_party/google/gflags/gflags)" DEP_CFLAGS="$(c_header_compile_args.common/third_party/google/gflags/gflags)" eval '(mkdir -p $$OBJ_DIR; DEST_DIR=$$(pwd)/$$GEN_DIR; CXXFLAGS="$$BASIC_CXXFLAGS $$DEP_FLAGS $$USER_CXXFLAGS" CFLAGS="$$BASIC_CFLAGS $$DEP_FLAGS $$USER_CFLAGS" LDFLAGS="$$LDFLAGS $$USER_LDFLAGS" CC="$$CC" CXX="$$CXX" ./configure --prefix=/ --cache-file=$$GEN_DIR/config.cache --with-gflagssrc="$$ROOT_DIR/$$GFLAGS_SRC_ROOT" --with-gflagslib="$$ROOT_DIR/$$GFLAGS_OBJS")' > ../../../../.gen-files/common/third_party/google/glog/.glog_gen.0.logfile 2>&1 || (cat ../../../../.gen-files/common/third_party/google/glog/.glog_gen.0.logfile; exit 1) ) && (mkdir -p .gen-obj/common/third_party/google/glog; touch .gen-obj/common/third_party/google/glog/.glog_gen.0.dummy)
+
+common/third_party/google/glog/glog_gen.0: .gen-obj/common/third_party/google/glog/.glog_gen.0.dummy common/third_party/google/gflags/gflags common/auto_.0
+
+.PHONY: common/third_party/google/glog/glog_gen.0
+
+
+.gen-obj/common/third_party/google/glog/.glog_gen.1.0.dummy: .gen-obj/common/third_party/google/glog/.glog_gen.0.dummy .gen-src/common/.dummy .gen-src/.gen-files/common/.dummy .gen-src/.gen-pkg/common/.dummy $(headers.common/third_party/google/gflags/gflags) .gen-obj/common/third_party/google/gflags/src/gflags.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_completions.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_nc.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_reporting.cc.o
+	@echo "Make:       //common/third_party/google/glog:glog_gen.1.0"
+	@(mkdir -p .gen-files/common/third_party/google/glog; cd common/third_party/google/glog; GEN_DIR="../../../../.gen-files/common/third_party/google/glog" OBJ_DIR="../../../../.gen-obj/common/third_party/google/glog SRC_DIR="../../../../.gen-src/common/third_party/google/glog ROOT_DIR="$(ROOT_DIR)"  CXX_GCC="$(CXX_GCC)" CC_GCC="$(CC_GCC)" CC="$(CC)" CXX="$(CXX)" CXXFLAGS="$(CXXFLAGS)" BASIC_CXXFLAGS="$(BASIC_CXXFLAGS)" CFLAGS="$(CFLAGS)" BASIC_CFLAGS="$(BASIC_CFLAGS)" LDFLAGS="$(LDFLAGS)" MAKE="$(MAKE)" GFLAGS_OBJS=".gen-obj/common/third_party/google/gflags/src/*.o" GFLAGS_SRC_ROOT="common/third_party/google/gflags/src" DEP_CXXFLAGS="$(cxx_header_compile_args.common/third_party/google/gflags/gflags)" DEP_CFLAGS="$(c_header_compile_args.common/third_party/google/gflags/gflags)" eval '($$MAKE install DESTDIR=$$(pwd)/$$GEN_DIR)' > ../../../../.gen-files/common/third_party/google/glog/.glog_gen.1.0.logfile 2>&1 || (cat ../../../../.gen-files/common/third_party/google/glog/.glog_gen.1.0.logfile; exit 1) ) && (mkdir -p .gen-obj/common/third_party/google/glog; touch .gen-obj/common/third_party/google/glog/.glog_gen.1.0.dummy)
+
+common/third_party/google/glog/glog_gen.1.0: .gen-obj/common/third_party/google/glog/.glog_gen.1.0.dummy common/third_party/google/glog/glog_gen.0 common/third_party/google/gflags/gflags common/auto_.0
+
+.PHONY: common/third_party/google/glog/glog_gen.1.0
+
+
+.gen-files/common/third_party/google/glog/lib/libglog.a: .gen-obj/common/third_party/google/glog/.glog_gen.1.0.dummy
+
+common/third_party/google/glog/glog_gen.1: common/third_party/google/glog/glog_gen.0 common/third_party/google/gflags/gflags common/third_party/google/glog/glog_gen.1.0 common/auto_.0
+
+.PHONY: common/third_party/google/glog/glog_gen.1
+
+common/third_party/google/glog/glog_gen: common/third_party/google/gflags/gflags common/third_party/google/glog/glog_gen.0 common/third_party/google/glog/glog_gen.1 common/auto_.0
+
+.PHONY: common/third_party/google/glog/glog_gen
+
+common/third_party/google/glog/glog: common/third_party/google/glog/glog_gen common/auto_.0
+
+.PHONY: common/third_party/google/glog/glog
+
+headers.common/log/log := common/log/log.h
+
+common/log/log: common/third_party/google/glog/glog common/auto_.0
+
+.PHONY: common/log/log
+
+headers.common/third_party/google/init/init := common/third_party/google/init/googleinit.h
+
+common/third_party/google/init/init: common/auto_.0
+
+.PHONY: common/third_party/google/init/init
+
+headers.common/base/init := common/base/init.h
+
+
+.gen-obj/common/base/init.cc.o: .gen-src/common/.dummy .gen-src/.gen-files/common/.dummy .gen-src/.gen-pkg/common/.dummy $(headers.common/third_party/google/gflags/gflags) .gen-obj/common/third_party/google/glog/.glog_gen.0.dummy .gen-obj/common/third_party/google/glog/.glog_gen.1.0.dummy $(headers.common/log/log) $(headers.common/third_party/google/init/init) $(headers.common/base/flags) $(headers.common/base/init) common/base/init.cc
+	@mkdir -p .gen-obj/common/base
+	@echo "Compiling:  common/base/init.cc (c++)"
+	@$(COMPILE.cc) -I. -I.gen-files -I.gen-src -I.gen-src/.gen-files -Icommon/third_party/google/glog/src $(cxx_header_compile_args.common/third_party/google/gflags/gflags) common/base/init.cc -o .gen-obj/common/base/init.cc.o
+
+common/base/init: .gen-obj/common/base/init.cc.o common/log/log common/third_party/google/init/init common/base/flags common/auto_.0
+
+.PHONY: common/base/init
 
 
 printer_main: .gen-obj/printer_main
@@ -70,18 +205,22 @@ printer_main.0:
 .PHONY: printer_main.0
 
 
-.gen-obj/printer_main.cc.o: $(headers.printer) printer_main.cc
+.gen-obj/printer_main.cc.o: .gen-src/common/.dummy .gen-src/.gen-files/common/.dummy .gen-src/.gen-pkg/common/.dummy $(headers.common/third_party/google/gflags/gflags) $(headers.common/base/flags) $(headers.printer) .gen-obj/common/third_party/google/glog/.glog_gen.0.dummy .gen-obj/common/third_party/google/glog/.glog_gen.1.0.dummy $(headers.common/log/log) $(headers.common/third_party/google/init/init) $(headers.common/base/init) printer_main.cc
 	@mkdir -p .gen-obj
 	@echo "Compiling:  printer_main.cc (c++)"
-	@$(COMPILE.cc) -I. -I.gen-files -I.gen-src printer_main.cc -o .gen-obj/printer_main.cc.o
+	@$(COMPILE.cc) -I. -I.gen-files -I.gen-src -I.gen-src/.gen-files -Icommon/third_party/google/glog/src $(cxx_header_compile_args.common/third_party/google/gflags/gflags) printer_main.cc -o .gen-obj/printer_main.cc.o
 
 
-.gen-obj/printer_main: .gen-obj/printer.cc.o .gen-obj/printer_main.cc.o
+.gen-obj/printer_main: .gen-obj/common/third_party/google/gflags/src/gflags.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_completions.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_nc.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_reporting.cc.o .gen-obj/printer.cc.o .gen-files/common/third_party/google/glog/lib/libglog.a .gen-obj/common/base/init.cc.o .gen-obj/printer_main.cc.o
 	@echo "Linking:    .gen-obj/printer_main"
-	@$(LINK.cc)  .gen-obj/printer_main.cc.o .gen-obj/printer.cc.o -o .gen-obj/printer_main
+	@$(LINK.cc)  .gen-obj/printer_main.cc.o .gen-obj/common/base/init.cc.o .gen-files/common/third_party/google/glog/lib/libglog.a .gen-obj/printer.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_reporting.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_nc.cc.o .gen-obj/common/third_party/google/gflags/src/gflags_completions.cc.o .gen-obj/common/third_party/google/gflags/src/gflags.cc.o -o .gen-obj/printer_main
 
 
 clean: 
+	@rm -rf .gen-src/common/.dummy
+	@rm -rf .gen-src/.gen-files/common/.dummy
+	@rm -rf .gen-src/.gen-pkg/common/.dummy
+	-@(mkdir -p .gen-files/common/third_party/google/glog; cd common/third_party/google/glog; GEN_DIR="../../../../.gen-files/common/third_party/google/glog" OBJ_DIR="../../../../.gen-obj/common/third_party/google/glog SRC_DIR="../../../../.gen-src/common/third_party/google/glog ROOT_DIR="$(ROOT_DIR)"  CXX_GCC="$(CXX_GCC)" CC_GCC="$(CC_GCC)" CC="$(CC)" CXX="$(CXX)" CXXFLAGS="$(CXXFLAGS)" BASIC_CXXFLAGS="$(BASIC_CXXFLAGS)" CFLAGS="$(CFLAGS)" BASIC_CFLAGS="$(BASIC_CFLAGS)" LDFLAGS="$(LDFLAGS)" MAKE="$(MAKE)" GFLAGS_OBJS=".gen-obj/common/third_party/google/gflags/src/*.o" GFLAGS_SRC_ROOT="common/third_party/google/gflags/src"  eval '($$MAKE DESTDIR=$$(pwd)/$$GEN_DIR clean > /dev/null 2>&1 || echo -n "")' > ../../../../.gen-files/common/third_party/google/glog/.glog_gen.1.0.logfile 2>&1 || (cat ../../../../.gen-files/common/third_party/google/glog/.glog_gen.1.0.logfile; exit 1) )
 	@[ -L printer_main ] && rm -f printer_main || true
 	@[ -L bin/printer_main ] && rm -f bin/printer_main || true
 	@rm -rf .gen-obj
