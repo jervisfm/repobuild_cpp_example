@@ -1,7 +1,7 @@
 repobuild_cpp_example
 =====================
 
-Tutorial example for repobuild.
+This is a very basic C++ example using Repobuild.
 
 ##### Instructions
 https://github.com/chrisvana/repobuild/wiki/Repobuild-Cpp-Tutorial
