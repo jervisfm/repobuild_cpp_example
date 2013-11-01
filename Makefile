@@ -91,7 +91,34 @@ printer: .gen-obj/printer.cc.o
 .PHONY: printer
 
 
+printer_main: .gen-obj/printer_main .gen-files/.dummy.prereqs
+	@ln -f -s .gen-obj/printer_main printer_main
+
+
+bin/printer_main: .gen-obj/printer_main .gen-files/.dummy.prereqs
+	@mkdir -p bin
+	@ln -f -s ../.gen-obj/printer_main bin/printer_main
+
+printer_main.0:
+
+.PHONY: printer_main.0
+
+
+.gen-obj/printer_main.cc.o: $(headers.printer) printer_main.cc .gen-files/.dummy.prereqs
+	@mkdir -p .gen-obj
+	@echo "Compiling:  printer_main.cc (c++)"
+	@$(COMPILE.cc) -I -I. -I.gen-files -I.gen-src printer_main.cc -o .gen-obj/printer_main.cc.o
+
+
+.gen-obj/printer_main: .gen-obj/printer.cc.o .gen-obj/printer_main.cc.o .gen-files/.dummy.prereqs
+	@echo "Linking:    .gen-obj/printer_main"
+	@mkdir -p .gen-obj
+	@$(LINK.cc)  .gen-obj/printer_main.cc.o .gen-obj/printer.cc.o -o .gen-obj/printer_main
+
+
 clean: .gen-files/.dummy.prereqs
+	@[ -L printer_main ] && rm -f printer_main || true
+	@[ -L bin/printer_main ] && rm -f bin/printer_main || true
 	@rm -rf .gen-obj
 	@rm -rf bin
 	@rm -rf .gen-files
@@ -109,10 +136,12 @@ INSTALL_PROGRAM=$(INSTALL)
 INSTALL_DATA=$(INSTALL) -m 644
 
 
-install: .gen-files/.dummy.prereqs
+install: .gen-files/.dummy.prereqs printer_main
+	@mkdir -p $(DESTDIR)$(bindir)
+	@$(INSTALL_PROGRAM) .gen-obj/printer_main $(DESTDIR)$(bindir)/printer_main
 
 
-all: printer .gen-files/.dummy.prereqs
+all: printer_main bin/printer_main .gen-files/.dummy.prereqs
 
 
 tests: .gen-files/.dummy.prereqs
@@ -120,7 +149,7 @@ tests: .gen-files/.dummy.prereqs
 
 licenses: 
 	@echo "License information."
-	@printf "//:printer =>\n\n"
+	@printf "//:printer_main =>\n\n"
 
 .PHONY: clean all tests install licenses
 
