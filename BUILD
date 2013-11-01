@@ -11,7 +11,7 @@
   "cc_binary": {
   "name": "printer_main",
   "cc_sources": ["printer_main.cc"],
-  "dependencies": [":printer"]
+  "dependencies": [":printer", "//common/base:init" ]
   }}
 
 ]
